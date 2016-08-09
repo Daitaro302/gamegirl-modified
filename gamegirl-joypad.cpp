@@ -25,20 +25,14 @@ int _button_pin6 = 22; // GPIO22     B
 int _button_pin7 =  8; // GPIO8      Start
 int _button_pin8 = 11; // GPIO11     Select
 
-int pinUpRead(int pressed_input, int pressed_output) {
+int pinUpRead(int pressed_input) {
   // Set pins
   pinMode(pressed_input, INPUT);
   pullUpDnControl(pressed_input, PUD_UP);
 
-  pinMode(pressed_output, OUTPUT);
-  digitalWrite(pressed_output, LOW);
-
   // Wait that the pins stabilise and read
   delayMicroseconds(1);
-  int value = !digitalRead(pressed_input);
-
-  // Reset pin for next read
-  pinMode(pressed_output, INPUT);
+  int value = digitalRead(pressed_input);
 
   return value;
 }
@@ -149,18 +143,18 @@ int main() {
     l1_button_old     = l1_button;
     r1_button_old     = r1_button;
 
-    up_button    = pinUpRead(_button_pin1, _button_pin1); // S1
-    down_button  = pinUpRead(_button_pin2, _button_pin2); // S2
-    left_button  = pinUpRead(_button_pin3, _button_pin3); // S3
-    right_button = pinUpRead(_button_pin4, _button_pin4); // S4
-    a_button     = pinUpRead(_button_pin5, _button_pin5); // S5
-    b_button     = pinUpRead(_button_pin6, _button_pin6); // S6
-    start_button = pinUpRead(_button_pin7, _button_pin7); // S7
-    selec_button = pinUpRead(_button_pin8, _button_pin8); // S8
-//   l1_button    = pinUpRead(_button_pin11, _button_pin11); // S11
-//   r1_button    = pinUpRead(_button_pin12, _button_pin12); // S1
-//   x_button     = pinUpRead(_button_pin5, _button_pin5); // S5
-//   y_button     = pinUpRead(_button_pin7, _button_pin7); // S7
+    up_button    = pinUpRead(_button_pin1); // S1
+    down_button  = pinUpRead(_button_pin2); // S2
+    left_button  = pinUpRead(_button_pin3); // S3
+    right_button = pinUpRead(_button_pin4); // S4
+    a_button     = pinUpRead(_button_pin5); // S5
+    b_button     = pinUpRead(_button_pin6); // S6
+    start_button = pinUpRead(_button_pin7); // S7
+    selec_button = pinUpRead(_button_pin8); // S8
+//   l1_button    = pinUpRead(_button_pin9); // S9
+//   r1_button    = pinUpRead(_button_pin10); // S10
+//   x_button     = pinUpRead(_button_pin11); // S11
+//   y_button     = pinUpRead(_button_pin12); // S12
 
     // Write to udev
     if (up_button != up_button_old) {
