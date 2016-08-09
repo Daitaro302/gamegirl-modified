@@ -16,29 +16,29 @@
 
 using namespace std;
 
-int _button_pin1 = 10; // GPIO10
-int _button_pin2 = 25; // GPIO25
-int _button_pin3 = 17; // GPIO17
-int _button_pin4 =  9; // GPIO9
-int _button_pin5 = 11; // GPIO11
-int _button_pin6 =  8; // GPIO8
-int _button_pin7 = 22; // GPIO22
-int _button_pin8 = 27; // GPIO27
+int _button_pin1 = 10; // GPIO10     D-Pad Up
+int _button_pin2 = 17; // GPIO17     D-Pad Down
+int _button_pin3 = 25; // GPIO25     D-Pad Left
+int _button_pin4 =  9; // GPIO9      D-Pad Right
+int _button_pin5 = 27; // GPIO27     A
+int _button_pin6 = 22; // GPIO22     B
+int _button_pin7 =  8; // GPIO8      Start
+int _button_pin8 = 11; // GPIO11     Select
 
-int pinUpRead(int pin_to_pull_up, int pin_to_output) {
-  // Set pins for Charlieplexing with diodes: http://www.mosaic-industries.com/embedded-systems/microcontroller-projects/electronic-circuits/matrix-keypad-scan-decode
-  pinMode(pin_to_pull_up, INPUT);
-  pullUpDnControl(pin_to_pull_up, PUD_UP);
+int pinUpRead(int pressed_input, int pressed_output) {
+  // Set pins
+  pinMode(pressed_input, INPUT);
+  pullUpDnControl(pressed_input, PUD_UP);
 
-  pinMode(pin_to_output, OUTPUT);
-  digitalWrite(pin_to_output, LOW);
+  pinMode(pressed_output, OUTPUT);
+  digitalWrite(pressed_output, LOW);
 
   // Wait that the pins stabilise and read
   delayMicroseconds(1);
-  int value = !digitalRead(pin_to_pull_up);
+  int value = !digitalRead(pressed_input);
 
   // Reset pin for next read
-  pinMode(pin_to_output, INPUT);
+  pinMode(pressed_output, INPUT);
 
   return value;
 }
@@ -149,18 +149,18 @@ int main() {
     l1_button_old     = l1_button;
     r1_button_old     = r1_button;
 
-    up_button    = pinUpRead(_button_pin1, _button_pin2); // S1
-    down_button  = pinUpRead(_button_pin1, _button_pin3); // S2
-    left_button  = pinUpRead(_button_pin1, _button_pin4); // S3
-    right_button = pinUpRead(_button_pin2, _button_pin1); // S4
-    x_button     = pinUpRead(_button_pin2, _button_pin3); // S5
-    b_button     = pinUpRead(_button_pin2, _button_pin7); // S6
-    y_button     = pinUpRead(_button_pin3, _button_pin1); // S7
-    a_button     = pinUpRead(_button_pin3, _button_pin8); // S8
-    start_button = pinUpRead(_button_pin3, _button_pin6); // S9
-    selec_button = pinUpRead(_button_pin4, _button_pin5); // S10
-    l1_button    = pinUpRead(_button_pin4, _button_pin2); // S11
-    r1_button    = pinUpRead(_button_pin4, _button_pin3); // S12
+    up_button    = pinUpRead(_button_pin1, _button_pin1); // S1
+    down_button  = pinUpRead(_button_pin2, _button_pin2); // S2
+    left_button  = pinUpRead(_button_pin3, _button_pin3); // S3
+    right_button = pinUpRead(_button_pin4, _button_pin4); // S4
+    a_button     = pinUpRead(_button_pin5, _button_pin5); // S5
+    b_button     = pinUpRead(_button_pin6, _button_pin6); // S6
+    start_button = pinUpRead(_button_pin7, _button_pin7); // S7
+    selec_button = pinUpRead(_button_pin8, _button_pin8); // S8
+//   l1_button    = pinUpRead(_button_pin11, _button_pin11); // S11
+//   r1_button    = pinUpRead(_button_pin12, _button_pin12); // S1
+//   x_button     = pinUpRead(_button_pin5, _button_pin5); // S5
+//   y_button     = pinUpRead(_button_pin7, _button_pin7); // S7
 
     // Write to udev
     if (up_button != up_button_old) {
@@ -203,7 +203,7 @@ int main() {
       set_button_event(fd, BTN_SELECT, selec_button != 0);
     }
 
-    if (l1_button != l1_button_old) {
+    if (selec_button != selec_button_old && start_button != start_button_old) {
       set_button_event(fd, BTN_TL, l1_button != 0);
     }
 
