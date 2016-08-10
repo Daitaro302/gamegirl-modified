@@ -33,6 +33,10 @@ int pinUpRead(int pressed_input) {
   // Wait that the pins stabilise and read
   delayMicroseconds(1);
   int value = digitalRead(pressed_input);
+  
+  pinMode(pressed_input, OUTPUT);
+  digitalWrite(pressed_input, LOW);
+  pinMode(pressed_input, INPUT);
 
   return value;
 }
