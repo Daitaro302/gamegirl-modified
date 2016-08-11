@@ -32,10 +32,10 @@ int pinUpRead(int pressed_input) {
 
   // Wait that the pins stabilise and read
   delayMicroseconds(1);
-  int value = digitalRead(pressed_input);
+  int value = !digitalRead(pressed_input);
   
-  pinMode(pressed_input, OUTPUT);
-  digitalWrite(pressed_input, LOW);
+  // pinMode(pressed_input, OUTPUT);
+  // digitalWrite(pressed_input, LOW);
   pinMode(pressed_input, INPUT);
 
   return value;
@@ -163,62 +163,50 @@ int main() {
     // Write to udev
     if (up_button != up_button_old) {
       set_button_event(fd, BTN_DPAD_UP, up_button != 0);
-      up_button = 0;
     }
 
     if (down_button != down_button_old) {
       set_button_event(fd, BTN_DPAD_DOWN, down_button != 0);
-      down_button = 0;
     }
 
     if (left_button != left_button_old) {
       set_button_event(fd, BTN_DPAD_LEFT, left_button != 0);
-      left_button = 0;
     }
 
     if (right_button != right_button_old) {
       set_button_event(fd, BTN_DPAD_RIGHT, right_button != 0);
-      right_button = 0;
     }
 
     if (x_button != x_button_old) {
       set_button_event(fd, BTN_NORTH, x_button != 0);
-      x_button = 0;
     }
 
     if (b_button != b_button_old) {
       set_button_event(fd, BTN_SOUTH, b_button != 0);
-      b_button = 0;
     }
 
     if (y_button != y_button_old) {
       set_button_event(fd, BTN_WEST, y_button != 0);
-      y_button = 0;
     }
 
     if (a_button != a_button_old) {
       set_button_event(fd, BTN_EAST, a_button != 0);
-      a_button = 0;
     }
 
     if (start_button != start_button_old) {
       set_button_event(fd, BTN_START, start_button != 0);
-      start_button = 0;
     }
 
     if (selec_button != selec_button_old) {
       set_button_event(fd, BTN_SELECT, selec_button != 0);
-      selec_button = 0;
     }
 
     if (selec_button != selec_button_old && start_button != start_button_old) {
       set_button_event(fd, BTN_TL, l1_button != 0);
-      l1_button = 0;
     }
 
     if (r1_button != r1_button_old) {
       set_button_event(fd, BTN_TR, r1_button != 0);
-      r1_button = 0;
     }
 
     memset(&ev, 0, sizeof(struct input_event));
