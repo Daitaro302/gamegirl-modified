@@ -177,17 +177,17 @@ int main() {
       set_button_event(fd, BTN_DPAD_RIGHT, right_button != 0);
     }
 
-    if (x_button != x_button_old) {
-      set_button_event(fd, BTN_NORTH, x_button != 0);
-    }
+//    if (x_button != x_button_old) {
+//      set_button_event(fd, BTN_NORTH, x_button != 0);
+//    }
 
     if (b_button != b_button_old) {
       set_button_event(fd, BTN_SOUTH, b_button != 0);
     }
 
-    if (y_button != y_button_old) {
-      set_button_event(fd, BTN_WEST, y_button != 0);
-    }
+//    if (y_button != y_button_old) {
+//      set_button_event(fd, BTN_WEST, y_button != 0);
+//    }
 
     if (a_button != a_button_old) {
       set_button_event(fd, BTN_EAST, a_button != 0);
@@ -201,13 +201,13 @@ int main() {
       set_button_event(fd, BTN_SELECT, selec_button != 0);
     }
 
-    if (selec_button != selec_button_old && start_button != start_button_old) {
-      set_button_event(fd, BTN_TL, l1_button != 0);
-    }
+//    if (selec_button != selec_button_old && start_button != start_button_old) {
+//      set_button_event(fd, BTN_TL, l1_button != 0);
+//    }
 
-    if (r1_button != r1_button_old) {
-      set_button_event(fd, BTN_TR, r1_button != 0);
-    }
+//    if (r1_button != r1_button_old) {
+//      set_button_event(fd, BTN_TR, r1_button != 0);
+//    }
 
     memset(&ev, 0, sizeof(struct input_event));
     ev.type = EV_SYN;
